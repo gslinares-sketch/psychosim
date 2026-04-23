@@ -21,7 +21,7 @@ Provide structured feedback in ${lang === "es" ? "Spanish" : "English"} covering
 Be specific, reference actual lines from the transcript, and be encouraging but honest.`;
 
   const response = await fetch(
-    `https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
+    `https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },
