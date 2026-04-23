@@ -1,6 +1,5 @@
-export const dynamic = "force-dynamic";
-
 "use client";
+export const dynamic = "force-dynamic";
 import { useState, useEffect } from "react";
 import { createClient } from "../../lib/supabase";
 import { useRouter } from "next/navigation";
@@ -225,8 +224,7 @@ export default function TeacherDashboard() {
                   <div className="fb" dangerouslySetInnerHTML={{ __html: selectedSession.feedback
                     .replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>")
                     .replace(/^## (.+)$/gm,"<h2>$1</h2>")
-                    .replace(/
-/g,"<br/>")
+                    .replace(/\n/g,"<br/>")
                   }}/>
                 ) : <p style={{ fontSize:13, color:"#4a5568" }}>No feedback recorded for this session</p>}
               </div>
