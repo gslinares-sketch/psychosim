@@ -178,10 +178,10 @@ export default function PsychoSim() {
     if (currentAudioRef.current) { currentAudioRef.current.pause(); currentAudioRef.current = null; }
     
     // Call ElevenLabs directly from browser (avoids server CORS issues)
-    const VOICE_EN = "EXAVITQu4vr4xnSDxMaL"; // Sarah - works on all plans
+    const VOICE_EN = "21m00Tcm4TlvDq8ikWAM"; // Rachel
     const VOICE_ES = "pFZP5JQG7iQjIQuC4Bku"; // Valentina
     const voiceId = lang === "es" ? VOICE_ES : VOICE_EN;
-    const apiKey = "sk_d62de5f228a329494d74fce766fd07252e4aea01ef0e37a7";
+    const apiKey = process.env.NEXT_PUBLIC_ELEVENLABS_API_KEY;
     
     try {
       setIsSpeaking(true);
@@ -274,7 +274,7 @@ export default function PsychoSim() {
         { role: "user", content: "Hello, I'm your therapist. Please introduce yourself.", hidden: true },
         { role: "assistant", content: reply }
       ]);
-      setTimeout(() => speakText(reply), 500);
+      // Don't auto-play - wait for user gesture to avoid browser blocking
     } catch(e) { setErrorMsg(e.message || "Connection error."); setStep(2); }
   }
 
@@ -733,6 +733,11 @@ export default function PsychoSim() {
                     </span>
                     <div className={m.role==="user"?"msg-therapist":"msg-patient"}>
                       <p style={{ fontSize: 14, lineHeight: 1.75, color: m.role==="user"?"#bfdbfe":"#cbd5e1" }}>{m.content}</p>
+                      {m.role==="assistant" && (
+                        <button onClick={() => speakText(m.content)} style={{ marginTop: 6, background: "transparent", border: "none", color: "#4a90a4", fontSize: 11, cursor: "pointer", padding: 0, opacity: 0.7 }}>
+                          🔊 {lang==="es"?"Escuchar":"Listen"}
+                        </button>
+                      )}
                     </div>
                   </div>
                 ))}
